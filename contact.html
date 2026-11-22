@@ -457,10 +457,13 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
     if (!FORM.action) { statusEl.textContent = m.notReady; return; }
     var body = new URLSearchParams();
     body.append("emailAddress", val("cf-email"));
-    if (FORM.company) body.append(FORM.company, val("cf-company"));
     body.append(FORM.name, val("cf-name"));
-    if (FORM.tel) body.append(FORM.tel, val("cf-tel"));
     body.append(FORM.message, val("cf-message"));
+    /* Optional fields are sent only when filled: an empty value can fail Google's checks. */
+    if (FORM.company && val("cf-company")) body.append(FORM.company, val("cf-company"));
+    if (FORM.tel && val("cf-tel")) body.append(FORM.tel, val("cf-tel"));
+    body.append("fvv", "1");
+    body.append("pageHistory", "0");
     submitBtn.disabled = true;
     fetch(FORM.action, { method: "POST", mode: "no-cors", body: body }).then(function () {
       form.hidden = true;
