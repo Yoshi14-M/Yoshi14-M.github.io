@@ -639,19 +639,17 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
   try { saved = localStorage.getItem("pf-lang"); } catch (e) {}
   setLang(saved === "en" ? "en" : "ja");
 
-  /* Contact form: posts to a Google Form. Fill in FORM after creating the form (see SETUP.md). */
-  var FORM = {
-    action: "https://docs.google.com/forms/d/e/1FAIpQLSdgp3Ml_gviJu2yxDAt5FUMlohCazur0Oqg9eDgq55va7PE-w/formResponse",
-    company: "entry.460600698", name: "entry.1478953999", tel: "entry.844970711", message: "entry.107031743"   /* The email uses "emailAddress". */
-  };
+  /* Contact form: posts JSON to a Google Apps Script web app (see SETUP.md and gas/Code.gs). */
+  var FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzKBLEGhyuMEZXz3xMFFR1hnm-P-XBHSSxSzgifo6tPK6mKuNJxQzRjZ5EKa14j8RAxJg/exec";   /* https://script.google.com/macros/s/XXXX/exec */
   var form = document.getElementById("contact-form");
   var sent = document.getElementById("cf-sent");
   var statusEl = document.getElementById("cf-status");
   var submitBtn = document.getElementById("cf-submit");
   var msgs = {
-    ja: { name: "お名前を入力してください。", email: "メールアドレスを入力してください。", emailFmt: "メールアドレスの形式で入力してください（例：name@example.com）。", tel: "電話番号は数字とハイフンで入力してください。", message: "お問い合わせ内容を入力してください。", fail: "送信できませんでした。時間をおいてもう一度お試しください。", notReady: "送信先がまだ設定されていません。" },
-    en: { name: "Please enter your name.", email: "Please enter your email address.", emailFmt: "Please enter a valid email address (e.g. name@example.com).", tel: "Use digits and hyphens for the phone number.", message: "Please enter a message.", fail: "The message could not be sent. Please try again later.", notReady: "The form destination is not set up yet." }
+    ja: { name: "お名前を入力してください。", email: "メールアドレスを入力してください。", emailFmt: "メールアドレスの形式で入力してください（例：name@example.com）。", tel: "電話番号は数字とハイフンで入力してください。", message: "お問い合わせ内容を入力してください。", fail: "送信できませんでした。時間をおいてもう一度お試しください。", notReady: "送信先がまだ設定されていません。", sending: "送信中…" },
+    en: { name: "Please enter your name.", email: "Please enter your email address.", emailFmt: "Please enter a valid email address (e.g. name@example.com).", tel: "Use digits and hyphens for the phone number.", message: "Please enter a message.", fail: "The message could not be sent. Please try again later.", notReady: "The form destination is not set up yet.", sending: "Sending…" }
   };
+  var fieldIds = { name: "cf-name", email: "cf-email", tel: "cf-tel", message: "cf-message" };
   function val(id) { return document.getElementById(id).value.trim(); }
   function setErr(id, text) {
     var input = document.getElementById(id);
@@ -684,27 +682,36 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
     e.preventDefault();
     statusEl.textContent = "";
     if (!validate()) return;
-    if (document.getElementById("cf-website").value) return; /* bot trap */
     var m = msgs[lang()];
-    if (!FORM.action) { statusEl.textContent = m.notReady; return; }
-    var body = new URLSearchParams();
-    body.append("emailAddress", val("cf-email"));
-    body.append(FORM.name, val("cf-name"));
-    body.append(FORM.message, val("cf-message"));
-    /* Optional fields are sent only when filled: an empty value can fail Google's checks. */
-    if (FORM.company && val("cf-company")) body.append(FORM.company, val("cf-company"));
-    if (FORM.tel && val("cf-tel")) body.append(FORM.tel, val("cf-tel"));
-    body.append("fvv", "1");
-    body.append("pageHistory", "0");
+    if (!FORM_ENDPOINT) { statusEl.textContent = m.notReady; return; }
+    var payload = {
+      company: val("cf-company"), name: val("cf-name"), email: val("cf-email"),
+      tel: val("cf-tel"), message: val("cf-message"),
+      website: document.getElementById("cf-website").value, lang: lang()
+    };
     submitBtn.disabled = true;
-    fetch(FORM.action, { method: "POST", mode: "no-cors", body: body }).then(function () {
-      form.hidden = true;
-      sent.hidden = false;
-      sent.focus();
-    }, function () {
-      statusEl.textContent = m.fail;
-      submitBtn.disabled = false;
-    });
+    /* No Content-Type header: the body is sent as text/plain, so the browser skips the CORS preflight. */
+    fetch(FORM_ENDPOINT, { method: "POST", body: JSON.stringify(payload) })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data && data.ok) {
+          form.hidden = true;
+          sent.hidden = false;
+          sent.focus();
+          return;
+        }
+        var errs = (data && data.errors) || [];
+        var shown = false;
+        errs.forEach(function (k) {
+          if (fieldIds[k]) { setErr(fieldIds[k], m[k === "email" ? "emailFmt" : k]); shown = true; }
+        });
+        if (!shown) statusEl.textContent = m.fail;
+        submitBtn.disabled = false;
+      })
+      .catch(function () {
+        statusEl.textContent = m.fail;
+        submitBtn.disabled = false;
+      });
   });
 })();
 </script>
