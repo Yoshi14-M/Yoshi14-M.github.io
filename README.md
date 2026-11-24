@@ -48,6 +48,7 @@ PHP / Laravel のバックエンドエンジニア、松井 義朗（Yoshiaki Ma
 ├── contact.html          # お問い合わせページ
 ├── favicon.svg           # ファビコン
 ├── apple-touch-icon.png  # ホーム画面用アイコン（iPhone）
+├── ogp.png               # SNS などで共有したときのサムネイル
 └── images/               # スクリーンショット・プロフィール写真
 ```
 
