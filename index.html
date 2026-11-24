@@ -94,7 +94,7 @@ section{padding-block:96px;border-bottom:1px solid var(--line)}
 /* about */
 .about-grid{display:grid;grid-template-columns:200px minmax(0,1fr);gap:56px}
 .avatar{width:200px;height:200px;border-radius:50%;padding:3px;background:linear-gradient(140deg,var(--accent),var(--green))}
-.avatar span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:var(--bg-2);font:700 44px var(--font-mono);color:var(--fg);letter-spacing:.04em}
+.avatar img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--bg-2)}
 .about-text{display:grid;gap:20px;color:var(--fg-2);max-width:46em}
 .career{margin-top:32px}
 .label{font-size:12px;color:var(--muted);letter-spacing:.06em;margin-bottom:10px}
@@ -242,7 +242,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
   .hero{padding-block:48px 64px}
   .sec-title{font-size:26px;margin-bottom:32px}
   .about-grid{grid-template-columns:minmax(0,1fr);gap:28px}
-  .avatar{width:120px;height:120px}.avatar span{font-size:28px}
+  .avatar{width:120px;height:120px}
   .career-row{grid-template-columns:minmax(0,1fr);gap:4px}
   .values,.skills{grid-template-columns:minmax(0,1fr);gap:14px}
   .values{margin-top:36px}
@@ -308,7 +308,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
     <div class="wrap">
       <h2 class="sec-title"><span class="ja">自己紹介</span><span class="en">About</span></h2>
       <div class="about-grid">
-        <div class="avatar" aria-hidden="true"><span>YM</span></div>
+        <div class="avatar"><img src="images/profile.webp" width="400" height="400" alt="松井 義朗（Yoshiaki Matsui）"></div>
         <div>
           <div class="about-text ja">
             <p>大阪府庁では、公務員として課税業務、医療費助成業務、予算業務などに携わってきました。受給者証発行システムの担当として現場の要望をまとめてベンダーに仕様改善を提案し、総務省の自治体DX実証事業（難病医療費助成）では、AIによる一次審査の自動判定に向けて、審査フローの整理と検証を担当しました。また、手作業のデータ処理をExcel VBAで自動化し、作業時間を月約20時間削減しました。</p>
