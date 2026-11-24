@@ -352,54 +352,74 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
 <script>
 (function () {
   var root = document.documentElement;
-  var slides = [
-    { src: "images/tm-sessions.webp", w: 909, h: 889, ja: "トレーニング記録（推定1RM・入力者／更新者）", en: "Training log (estimated 1RM, entered/updated by)" },
-    { src: "images/tm-graphs.webp", w: 754, h: 916, ja: "トレーニングのグラフ", en: "Training charts" },
-    { src: "images/tm-clients.webp", w: 1051, h: 852, ja: "利用者一覧（トレーナー・検索／並び替え）", en: "Client list (trainer view, search & sort)" },
-    { src: "images/tm-coaching-note.webp", w: 1012, h: 601, ja: "指導メモ（利用者には非表示）", en: "Coaching notes (hidden from clients)" }
-  ];
-  var idx = 0;
-  var img = document.getElementById("slide-img");
-  var cap = document.getElementById("slide-cap");
-  var dotsEl = document.getElementById("slide-dots");
-
-  if (dotsEl) slides.forEach(function (s, i) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.id = "slide-dot-" + (i + 1);
-    b.setAttribute("aria-label", "Screenshot " + (i + 1));
-    b.addEventListener("click", function () { show(i); });
-    dotsEl.appendChild(b);
-    var pre = new Image(); pre.src = s.src;
-  });
-
+  var SLIDES = {
+    tm: [
+      { src: "images/tm-sessions.webp", ja: "トレーニング記録（推定1RM・入力者／更新者）", en: "Training log (estimated 1RM, entered/updated by)" },
+      { src: "images/tm-graphs.webp", ja: "トレーニングのグラフ", en: "Training charts" },
+      { src: "images/tm-clients.webp", ja: "利用者一覧（トレーナー・検索／並び替え）", en: "Client list (trainer view, search & sort)" },
+      { src: "images/tm-coaching-note.webp", ja: "指導メモ（利用者には非表示）", en: "Coaching notes (hidden from clients)" }
+    ],
+    att: [
+      { src: "images/att-clock.webp", ja: "勤怠の打刻（従業員）", en: "Clock-in screen (employee)" },
+      { src: "images/att-admin-daily.webp", ja: "日次の勤怠一覧（管理者）", en: "Daily attendance list (admin)" },
+      { src: "images/att-report.webp", ja: "マイ勤怠レポート（過去6か月の集計）", en: "My attendance report (last 6 months)" }
+    ],
+    bs: [
+      { src: "images/bs-list.webp", ja: "書籍一覧（キーワード・ジャンルで検索）", en: "Book list (search by keyword and genre)" },
+      { src: "images/bs-isbn.webp", ja: "書籍登録（ISBNから自動入力）", en: "Add a book (auto-fill from ISBN)" },
+      { src: "images/bs-ranking.webp", ja: "評価ランキング TOP10", en: "Top 10 by rating" },
+      { src: "images/bs-plan.webp", ja: "読書計画", en: "Reading plans" }
+    ],
+    cf: [
+      { src: "images/cf-form.webp", ja: "お問い合わせフォーム", en: "Contact form" },
+      { src: "images/cf-admin-list.webp", ja: "問い合わせ一覧（検索・CSVエクスポート）", en: "Inquiry list (search & CSV export)" },
+      { src: "images/cf-tags.webp", ja: "タグ管理", en: "Tag management" }
+    ]
+  };
   function lang() { return root.getAttribute("data-lang") === "en" ? "en" : "ja"; }
-  function show(i) {
-    if (!img) return;
-    idx = (i + slides.length) % slides.length;
-    var s = slides[idx];
-    img.src = s.src; img.alt = s[lang()];
-    cap.textContent = s[lang()];
-    Array.prototype.forEach.call(dotsEl.children, function (d, j) { d.setAttribute("aria-current", j === idx ? "true" : "false"); });
-  }
-  if (img) {
-  document.getElementById("slide-prev").addEventListener("click", function () { show(idx - 1); });
-  document.getElementById("slide-next").addEventListener("click", function () { show(idx + 1); });
-  var startX = null;
-  img.parentNode.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
-  img.parentNode.addEventListener("touchend", function (e) {
-    if (startX === null) return;
-    var dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
-    startX = null;
+  var sliders = [];
+  document.querySelectorAll(".slider[data-set]").forEach(function (el) {
+    var slides = SLIDES[el.getAttribute("data-set")];
+    if (!slides) return;
+    var img = el.querySelector(".slide-img");
+    var cap = el.querySelector(".slide-cap");
+    var dotsEl = el.querySelector(".dots");
+    var s = { idx: 0 };
+    s.show = function (i) {
+      s.idx = (i + slides.length) % slides.length;
+      var d = slides[s.idx];
+      img.src = d.src;
+      img.alt = d[lang()];
+      cap.textContent = d[lang()];
+      Array.prototype.forEach.call(dotsEl.children, function (b, j) { b.setAttribute("aria-current", j === s.idx ? "true" : "false"); });
+    };
+    slides.forEach(function (d, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Screenshot " + (i + 1));
+      b.addEventListener("click", function () { s.show(i); });
+      dotsEl.appendChild(b);
+      var pre = new Image(); pre.src = d.src;
+    });
+    el.querySelector(".prev").addEventListener("click", function () { s.show(s.idx - 1); });
+    el.querySelector(".next").addEventListener("click", function () { s.show(s.idx + 1); });
+    var startX = null;
+    var viewer = el.querySelector(".viewer");
+    viewer.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    viewer.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) s.show(s.idx + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
+    sliders.push(s);
   });
-  }
 
   function setLang(l) {
     root.setAttribute("data-lang", l);
     root.setAttribute("lang", l);
     document.querySelectorAll("[data-set-lang]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === l ? "true" : "false"); });
-    show(idx);
+    sliders.forEach(function (s) { s.show(s.idx); });
     try { localStorage.setItem("pf-lang", l); } catch (e) {}
   }
   document.querySelectorAll("[data-set-lang]").forEach(function (b) {

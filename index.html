@@ -166,6 +166,11 @@ section{padding-block:96px;border-bottom:1px solid var(--line)}
 .demo-note{margin-top:22px;font-size:13px;color:var(--muted);line-height:1.7;padding:12px 14px;border:1px solid var(--line-2);border-radius:9px;background:var(--bg-2)}
 .links{display:flex;gap:10px;flex-wrap:wrap}
 
+.mini-card .p-title{font-size:24px}
+.mini-card .feature-body .bullets{margin-top:18px}
+.mini-card .feature-body .chips{margin-top:18px}
+.mini-card .feature-body .links{margin-top:22px}
+.mini-card .shots{padding:36px 24px 28px}
 .mini{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:40px;padding:32px 36px 34px}
 .mini .p-title{font-size:22px}
 .mini .p-desc{font-size:14px;margin-top:14px}
@@ -408,15 +413,15 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
         <article class="card">
           <div class="feature-top">
             <div class="shots">
-              <div class="slider" id="slider">
+              <div class="slider" data-set="tm">
                 <div class="viewer">
-                  <img id="slide-img" src="images/tm-sessions.webp" alt="">
-                  <button type="button" class="nav-btn prev" id="slide-prev" aria-label="Previous screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
-                  <button type="button" class="nav-btn next" id="slide-next" aria-label="Next screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+                  <img class="slide-img" src="images/tm-sessions.webp" alt="">
+                  <button type="button" class="nav-btn prev" aria-label="Previous screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+                  <button type="button" class="nav-btn next" aria-label="Next screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
                 </div>
                 <div class="meta-row">
-                  <p id="slide-cap" aria-live="polite"></p>
-                  <div class="dots" id="slide-dots"></div>
+                  <p class="slide-cap" aria-live="polite"></p>
+                  <div class="dots"></div>
                 </div>
               </div>
             </div>
@@ -477,65 +482,104 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
           </div>
         </article>
 
-        <article class="card mini">
-          <div>
+        <article class="card mini-card">
+          <div class="feature-top">
+            <div class="shots">
+              <div class="slider" data-set="att">
+                <div class="viewer">
+                  <img class="slide-img" src="images/att-clock.webp" alt="">
+                  <button type="button" class="nav-btn prev" aria-label="Previous screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+                  <button type="button" class="nav-btn next" aria-label="Next screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+                </div>
+                <div class="meta-row">
+                  <p class="slide-cap" aria-live="polite"></p>
+                  <div class="dots"></div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-body">
             <div class="tags"><span class="tag amber"><span class="ja">模擬案件</span><span class="en">Mock project</span></span></div>
             <h3 class="p-title"><span class="ja">勤怠管理アプリ</span><span class="en">Attendance Manager</span></h3>
             <p class="p-meta"><span class="ja">制作期間 2026年9月〜10月 ・ スクール課題</span><span class="en">Built Sep – Oct 2026 · School assignment</span></p>
             <p class="p-desc ja">従業員の打刻・勤怠修正申請と、管理者による確認・承認・修正を備えた勤怠管理システム。画面（Blade）は提供されたものを使い、基本設計書・テーブル仕様書を自分で作成して、DB設計・認証・公開API・テストを実装しました。</p>
             <p class="p-desc en">An attendance system where employees clock in/out and request corrections, and administrators review, approve and edit records. Using the provided Blade views, I wrote the basic design and table specs myself and built the DB design, auth, public API and tests.</p>
-            <div class="chips"><span class="chip">Laravel</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Docker</span><span class="chip">Fortify</span><span class="chip">Sanctum</span></div>
-          </div>
-          <div>
             <ul class="bullets">
               <li><span class="ja">Sanctum 認証・Policy 認可付きの公開 REST API（CRUD）</span><span class="en">Public REST API (CRUD) with Sanctum auth and Policy authorization</span></li>
               <li><span class="ja">メール認証、CSV 出力、勤怠統計レポート</span><span class="en">Email verification, CSV export and attendance reports</span></li>
               <li><span class="ja">Fortify による認証と権限の分離（従業員 / 管理者）</span><span class="en">Fortify auth with separate permissions (employee / admin)</span></li>
             </ul>
+            <div class="chips"><span class="chip">Laravel</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Docker</span><span class="chip">Fortify</span><span class="chip">Sanctum</span></div>
             <div class="links">
               <a class="btn btn-ghost btn-sm" href="https://github.com/Yoshi14-M/attendance-app#readme" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#gh"/></svg>GitHub</a>
+            </div>
             </div>
           </div>
         </article>
 
-        <article class="card mini">
-          <div>
+        <article class="card mini-card">
+          <div class="feature-top">
+            <div class="shots">
+              <div class="slider" data-set="bs">
+                <div class="viewer">
+                  <img class="slide-img" src="images/bs-list.webp" alt="">
+                  <button type="button" class="nav-btn prev" aria-label="Previous screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+                  <button type="button" class="nav-btn next" aria-label="Next screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+                </div>
+                <div class="meta-row">
+                  <p class="slide-cap" aria-live="polite"></p>
+                  <div class="dots"></div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-body">
             <div class="tags"><span class="tag amber"><span class="ja">模擬案件</span><span class="en">Mock project</span></span></div>
             <h3 class="p-title"><span class="ja">書籍レビューアプリ</span><span class="en">Book Review App</span></h3>
             <p class="p-meta"><span class="ja">制作期間 2026年10月〜11月 ・ スクール課題</span><span class="en">Built Oct – Nov 2026 · School assignment</span></p>
             <p class="p-desc ja">書籍の登録・レビュー・お気に入り・いいねと、平均評価ランキングを備えた書籍レビューアプリ。画面（Blade）は提供されたものを使い、詳細度50%の要件から仕様を詰めながら、DB設計・認証／認可・公開API・テストを実装しました。</p>
             <p class="p-desc en">A book review app where users register books, post reviews, add favorites and likes, and see a ranking by average rating. Using the provided Blade views, I refined a deliberately vague spec and built the DB design, auth, public API and tests.</p>
-            <div class="chips"><span class="chip">Laravel</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Docker</span><span class="chip">Fortify</span><span class="chip">Sanctum</span></div>
-          </div>
-          <div>
             <ul class="bullets">
               <li><span class="ja">公開 REST API を Sanctum のトークン認証で実装</span><span class="en">Public REST API with Sanctum token auth</span></li>
               <li><span class="ja">ISBN から Google Books API で書籍情報を自動入力</span><span class="en">Auto-fills book details from an ISBN via the Google Books API</span></li>
               <li><span class="ja">読書計画のリマインダー通知を日次バッチで送信</span><span class="en">Daily batch job that sends reading-plan reminders</span></li>
             </ul>
+            <div class="chips"><span class="chip">Laravel</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Docker</span><span class="chip">Fortify</span><span class="chip">Sanctum</span></div>
             <div class="links">
               <a class="btn btn-ghost btn-sm" href="https://github.com/Yoshi14-M/bookshelf-app#readme" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#gh"/></svg>GitHub</a>
+            </div>
             </div>
           </div>
         </article>
 
-        <article class="card mini">
-          <div>
+        <article class="card mini-card">
+          <div class="feature-top">
+            <div class="shots">
+              <div class="slider" data-set="cf">
+                <div class="viewer">
+                  <img class="slide-img" src="images/cf-form.webp" alt="">
+                  <button type="button" class="nav-btn prev" aria-label="Previous screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+                  <button type="button" class="nav-btn next" aria-label="Next screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+                </div>
+                <div class="meta-row">
+                  <p class="slide-cap" aria-live="polite"></p>
+                  <div class="dots"></div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-body">
             <div class="tags"><span class="tag amber"><span class="ja">模擬案件</span><span class="en">Mock project</span></span></div>
             <h3 class="p-title"><span class="ja">お問い合わせフォーム</span><span class="en">Contact Form</span></h3>
             <p class="p-meta"><span class="ja">制作期間 2026年8月〜9月 ・ スクール課題</span><span class="en">Built Aug – Sep 2026 · School assignment</span></p>
             <p class="p-desc ja">一般ユーザー向けの問い合わせフォームと、管理者向けの管理画面を備えたWebアプリ。画面（Blade）は教材で提供され、DB設計・ルーティング・テストなどのバックエンドを実装しました。</p>
             <p class="p-desc en">A web app with a public contact form and an admin dashboard. The Blade views were provided by the course; I built the backend: DB design, routing and tests.</p>
-            <div class="chips"><span class="chip">Laravel</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Docker</span><span class="chip">Fortify</span></div>
-          </div>
-          <div>
             <ul class="bullets">
               <li><span class="ja">問い合わせの検索・CSV エクスポート・タグ管理</span><span class="en">Search, CSV export and tagging for inquiries</span></li>
               <li><span class="ja">仕様書どおり REST API の CRUD を実装（認証は対象外）</span><span class="en">REST API with full CRUD per the given spec (auth out of scope)</span></li>
               <li><span class="ja">Fortify による管理者のログイン認証</span><span class="en">Admin login with Fortify</span></li>
             </ul>
+            <div class="chips"><span class="chip">Laravel</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Docker</span><span class="chip">Fortify</span></div>
             <div class="links">
               <a class="btn btn-ghost btn-sm" href="https://github.com/Yoshi14-M/contact-form-app#readme" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#gh"/></svg>GitHub</a>
+            </div>
             </div>
           </div>
         </article>
@@ -587,54 +631,74 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;font-
 <script>
 (function () {
   var root = document.documentElement;
-  var slides = [
-    { src: "images/tm-sessions.webp", w: 909, h: 889, ja: "トレーニング記録（推定1RM・入力者／更新者）", en: "Training log (estimated 1RM, entered/updated by)" },
-    { src: "images/tm-graphs.webp", w: 754, h: 916, ja: "トレーニングのグラフ", en: "Training charts" },
-    { src: "images/tm-clients.webp", w: 1051, h: 852, ja: "利用者一覧（トレーナー・検索／並び替え）", en: "Client list (trainer view, search & sort)" },
-    { src: "images/tm-coaching-note.webp", w: 1012, h: 601, ja: "指導メモ（利用者には非表示）", en: "Coaching notes (hidden from clients)" }
-  ];
-  var idx = 0;
-  var img = document.getElementById("slide-img");
-  var cap = document.getElementById("slide-cap");
-  var dotsEl = document.getElementById("slide-dots");
-
-  if (dotsEl) slides.forEach(function (s, i) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.id = "slide-dot-" + (i + 1);
-    b.setAttribute("aria-label", "Screenshot " + (i + 1));
-    b.addEventListener("click", function () { show(i); });
-    dotsEl.appendChild(b);
-    var pre = new Image(); pre.src = s.src;
-  });
-
+  var SLIDES = {
+    tm: [
+      { src: "images/tm-sessions.webp", ja: "トレーニング記録（推定1RM・入力者／更新者）", en: "Training log (estimated 1RM, entered/updated by)" },
+      { src: "images/tm-graphs.webp", ja: "トレーニングのグラフ", en: "Training charts" },
+      { src: "images/tm-clients.webp", ja: "利用者一覧（トレーナー・検索／並び替え）", en: "Client list (trainer view, search & sort)" },
+      { src: "images/tm-coaching-note.webp", ja: "指導メモ（利用者には非表示）", en: "Coaching notes (hidden from clients)" }
+    ],
+    att: [
+      { src: "images/att-clock.webp", ja: "勤怠の打刻（従業員）", en: "Clock-in screen (employee)" },
+      { src: "images/att-admin-daily.webp", ja: "日次の勤怠一覧（管理者）", en: "Daily attendance list (admin)" },
+      { src: "images/att-report.webp", ja: "マイ勤怠レポート（過去6か月の集計）", en: "My attendance report (last 6 months)" }
+    ],
+    bs: [
+      { src: "images/bs-list.webp", ja: "書籍一覧（キーワード・ジャンルで検索）", en: "Book list (search by keyword and genre)" },
+      { src: "images/bs-isbn.webp", ja: "書籍登録（ISBNから自動入力）", en: "Add a book (auto-fill from ISBN)" },
+      { src: "images/bs-ranking.webp", ja: "評価ランキング TOP10", en: "Top 10 by rating" },
+      { src: "images/bs-plan.webp", ja: "読書計画", en: "Reading plans" }
+    ],
+    cf: [
+      { src: "images/cf-form.webp", ja: "お問い合わせフォーム", en: "Contact form" },
+      { src: "images/cf-admin-list.webp", ja: "問い合わせ一覧（検索・CSVエクスポート）", en: "Inquiry list (search & CSV export)" },
+      { src: "images/cf-tags.webp", ja: "タグ管理", en: "Tag management" }
+    ]
+  };
   function lang() { return root.getAttribute("data-lang") === "en" ? "en" : "ja"; }
-  function show(i) {
-    if (!img) return;
-    idx = (i + slides.length) % slides.length;
-    var s = slides[idx];
-    img.src = s.src; img.alt = s[lang()];
-    cap.textContent = s[lang()];
-    Array.prototype.forEach.call(dotsEl.children, function (d, j) { d.setAttribute("aria-current", j === idx ? "true" : "false"); });
-  }
-  if (img) {
-  document.getElementById("slide-prev").addEventListener("click", function () { show(idx - 1); });
-  document.getElementById("slide-next").addEventListener("click", function () { show(idx + 1); });
-  var startX = null;
-  img.parentNode.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
-  img.parentNode.addEventListener("touchend", function (e) {
-    if (startX === null) return;
-    var dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
-    startX = null;
+  var sliders = [];
+  document.querySelectorAll(".slider[data-set]").forEach(function (el) {
+    var slides = SLIDES[el.getAttribute("data-set")];
+    if (!slides) return;
+    var img = el.querySelector(".slide-img");
+    var cap = el.querySelector(".slide-cap");
+    var dotsEl = el.querySelector(".dots");
+    var s = { idx: 0 };
+    s.show = function (i) {
+      s.idx = (i + slides.length) % slides.length;
+      var d = slides[s.idx];
+      img.src = d.src;
+      img.alt = d[lang()];
+      cap.textContent = d[lang()];
+      Array.prototype.forEach.call(dotsEl.children, function (b, j) { b.setAttribute("aria-current", j === s.idx ? "true" : "false"); });
+    };
+    slides.forEach(function (d, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Screenshot " + (i + 1));
+      b.addEventListener("click", function () { s.show(i); });
+      dotsEl.appendChild(b);
+      var pre = new Image(); pre.src = d.src;
+    });
+    el.querySelector(".prev").addEventListener("click", function () { s.show(s.idx - 1); });
+    el.querySelector(".next").addEventListener("click", function () { s.show(s.idx + 1); });
+    var startX = null;
+    var viewer = el.querySelector(".viewer");
+    viewer.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    viewer.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) s.show(s.idx + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
+    sliders.push(s);
   });
-  }
 
   function setLang(l) {
     root.setAttribute("data-lang", l);
     root.setAttribute("lang", l);
     document.querySelectorAll("[data-set-lang]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === l ? "true" : "false"); });
-    show(idx);
+    sliders.forEach(function (s) { s.show(s.idx); });
     try { localStorage.setItem("pf-lang", l); } catch (e) {}
   }
   document.querySelectorAll("[data-set-lang]").forEach(function (b) {
